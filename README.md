@@ -21,7 +21,7 @@ Custom .NET templates for **El Catador** and **Bona** applications using Hybrid 
 ### ⚙️ Step 1: Clone the Repository
 
 ```bash
-git clone https://dev.azure.com/DevSharedProjects/DotNetTemplates/_git/DotNetTemplates
+git clone https://dev.azure.com/{ORG}/DotNetTemplates/_git/DotNetTemplates
 cd DotNetTemplates
 ```
 
@@ -32,7 +32,7 @@ You need a PAT (Personal Access Token) with **Packaging (Read)** permission to i
 #### 🧭 How to generate a PAT:
 
 1. Go to your Azure DevOps organization:  
-   [https://dev.azure.com/DevSharedProjects](https://dev.azure.com/DevSharedProjects)
+   [https://dev.azure.com/{ORG}](https://dev.azure.com/{ORG})
 
 2. Click your profile icon (top-right corner) → **Security**
 
@@ -41,7 +41,7 @@ You need a PAT (Personal Access Token) with **Packaging (Read)** permission to i
 4. Set the following:
    - **Name**: `ProjectTemplatesAccess`
    - **Expiration**: Choose according to your policy (e.g., 30 or 90 days or custom defined (1 year from now))
-   - **Organization**: DevSharedProjects
+   - **Organization**: {ORG}
    - **Scopes**:  
      Select **Custom defined** →  
      Expand **Packaging** and check `Read`
@@ -67,14 +67,14 @@ The script configures the NuGet feed, prompts for your PAT, and installs the tem
 Once the NuGet source is configured by the script, you can install the template package with:
 
 ```bash
-dotnet new install CataBon.DotNet.Templates
+dotnet new install {ORG}.DotNet.Templates
 ```
 
 ---
 
 ### 📦 Templates Included
 
-Installing `CataBon.DotNet.Templates` gives you access to the following ready-to-use templates:
+Installing `{ORG}.DotNet.Templates` gives you access to the following ready-to-use templates:
 
 | Template Name                     | Short Name                      | Type                                  | Description                                                          |
 |-----------------------------------|---------------------------------|---------------------------------------|----------------------------------------------------------------------|

@@ -21,7 +21,7 @@ Plantillas personalizadas de .NET para aplicaciones de **El Catador** y **Bona**
 ### ⚙️ Paso 1: Clona el Repositorio
 
 ```bash
-git clone https://dev.azure.com/DevSharedProjects/DotNetTemplates/_git/DotNetTemplates
+git clone https://dev.azure.com/{ORG}/DotNetTemplates/_git/DotNetTemplates
 cd DotNetTemplates
 ```
 
@@ -32,7 +32,7 @@ Necesitas un PAT (Token de Acceso Personal) con permiso de **Packaging (Read)** 
 #### 🧭 Cómo generar un PAT:
 
 1. Ve a tu organización en Azure DevOps:  
-   [https://dev.azure.com/DevSharedProjects](https://dev.azure.com/DevSharedProjects)
+   [https://dev.azure.com/{ORG}](https://dev.azure.com/{ORG})
 
 2. Haz clic en tu ícono de perfil (esquina superior derecha) → **Security**
 
@@ -41,7 +41,7 @@ Necesitas un PAT (Token de Acceso Personal) con permiso de **Packaging (Read)** 
 4. Establece lo siguiente:
    - **Nombre**: `ProjectTemplatesAccess`
    - **Expiración**: Elige según tu política (por ejemplo, 30 o 90 días o personalizado, como 1 año)
-   - **Organización**: DevSharedProjects
+   - **Organización**: {ORG}
    - **Ámbitos (Scopes)**:  
      Selecciona **Custom defined** →  
      Expande **Packaging** y marca `Read`
@@ -67,14 +67,14 @@ El script configura el feed de NuGet, solicita tu PAT e instala la plantilla.
 Una vez que el script configure la fuente NuGet, puedes instalar el paquete de la plantilla con:
 
 ```bash
-dotnet new install CataBon.DotNet.Templates
+dotnet new install {ORG}.DotNet.Templates
 ```
 
 ---
 
 ### 📦 Plantillas Incluidas
 
-Instalar `CataBon.DotNet.Templates` te da acceso a las siguientes plantillas listas para usar:
+Instalar `{ORG}.DotNet.Templates` te da acceso a las siguientes plantillas listas para usar:
 
 | Nombre de Plantilla                  | Nombre Corto                      | Tipo                                  | Descripción                                                            |
 |-------------------------------------|-----------------------------------|---------------------------------------|------------------------------------------------------------------------|
