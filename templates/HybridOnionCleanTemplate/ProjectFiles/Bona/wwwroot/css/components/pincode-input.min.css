@@ -1,0 +1,34 @@
+﻿.pincode-input {
+    width: 1.8em !important;
+    height: 2em !important;
+    line-height: 50px;
+    border-radius: 3px;
+    border: 2px solid gray;
+    text-align: center;
+    font-size: 1.5rem;
+    text-transform: uppercase
+}
+
+    .pincode-input:not(:last-child) {
+        margin-right: 1rem
+    }
+
+    .pincode-input.pincode-input--focused {
+        border-color: #000
+    }
+
+    .pincode-input.pincode-input--filled {
+        border-color: #0E3B43
+    }
+
+.pincode-input-container.incorrect .pincode-input {
+    color: white !important;
+    background-color: #5A0A00;
+    border-color: #E11900;
+}
+
+.pincode-input-container.correct .pincode-input {
+    color: white !important;
+    background-color: #10462D;
+    border-color: #048848;
+}

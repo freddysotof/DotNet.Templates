@@ -1,0 +1,28 @@
+﻿.utility .animated-checkbox > label {
+    font-size: 0.8em !important;
+}
+/*.utility p {
+    font-size: 0.8em !important;
+}*/
+
+.material-half-bg .cover {
+    background-color: var(--Catador-red) !important;
+    height: 50vh;
+}
+
+.link-color:link{
+    color: var(--primary) !important;
+}
+
+.primary-Catador-color {
+    color: var(--Catador-red) !important;
+}
+
+.btn-Catador-background {
+    background-color: var(--Catador-red) !important;
+}
+
+:root {
+    --Catador-red: #FF0019;
+    /*--Catador-red: #ff0218;*/
+}

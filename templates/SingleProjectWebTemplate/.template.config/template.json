@@ -1,0 +1,406 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Freddy Soto",
+  "classifications": [
+    "Web",
+    "MVC"
+  ],
+  "identity": "SingleProjectWebTemplate",
+  "name": "Single Project Web Template",
+  "description": "Template proyecto web standalone con arquitectura Onion/Clean",
+  "shortName": "singleprojectwebtemplate",
+  "sourceName": "SingleProjectWebTemplate",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "preferNameDirectory": true,
+  "symbols": {
+    "Framework": {
+      "type": "parameter",
+      "description": "The target framework of the project",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "net8.0"
+        }
+      ],
+      "defaultValue": "net8.0",
+      "replaces": "{TargetFramework}"
+    },
+    "HttpPort": {
+      "type": "generated",
+      "generator": "random",
+      "parameters": {
+        "low": 5000,
+        "high": 5999
+      },
+      "replaces": "5075"
+    },
+    "HttpsPort": {
+      "type": "generated",
+      "generator": "random",
+      "parameters": {
+        "low": 7000,
+        "high": 7999
+      },
+      "replaces": "7075"
+    },
+    "SslPort": {
+      "type": "generated",
+      "generator": "random",
+      "parameters": {
+        "low": 44300,
+        "high": 44399
+      },
+      "replaces": "44324"
+    },
+    "Company": {
+      "type": "parameter",
+      "description": "The company who owns this project",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "Catador"
+        },
+        {
+          "choice": "Bona"
+        }
+      ],
+      "defaultValue": "",
+      "replaces": "{CompanyKey}",
+      "isRequired": true
+    },
+    "CompanyDomain": {
+      "type": "parameter",
+      "displayName": "Company Domain",
+      "description": "The company domain who owns this project",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "elcatador.com"
+        },
+        {
+          "choice": "bona.com.do"
+        }
+      ],
+      "defaultValue": "",
+      "replaces": "{CompanyDomain}",
+      "isRequired": true
+    },
+    "SystemKey": {
+      "type": "parameter",
+      "displayName": "System Key",
+      "description": "The System Key of the project",
+      "datatype": "text",
+      "replaces": "{SystemKey}",
+      "isRequired": true
+    },
+    "SystemId": {
+      "type": "parameter",
+      "displayName": "System Id",
+      "description": "The System Id of the project",
+      "datatype": "int",
+      "replaces": "{SystemId}",
+      "defaultValue": "1"
+    },
+    "SystemCode": {
+      "type": "parameter",
+      "displayName": "System Code",
+      "description": "The System Code of the project",
+      "datatype": "int",
+      "replaces": "{SystemCode}",
+      "defaultValue": "1"
+    },
+    "SystemTitle": {
+      "type": "parameter",
+      "displayName": "System Title",
+      "description": "The System Title of the project",
+      "datatype": "text",
+      "replaces": "{SystemTitle}"
+    },
+    "AzureAdTenant": {
+      "type": "parameter",
+      "displayName": "Azure AD Tenant",
+      "description": "The Azure Tenant for single sign-in on Azure",
+      "datatype": "text",
+      "replaces": "{AzureTenant}",
+      "isRequired": false
+    },
+    "AzureAdClientId": {
+      "type": "parameter",
+      "displayName": "Azure AD ClientId",
+      "description": "The Client ID for single sign-in on Azure Tenant",
+      "datatype": "text",
+      "replaces": "{AzureAdClientId}",
+      "isRequired": false
+    },
+    "AzureAdClientSecret": {
+      "type": "parameter",
+      "displayName": "Azure AD Client Secret",
+      "description": "The Client Secret for single sign-in on Azure Tenant",
+      "datatype": "text",
+      "replaces": "{AzureAdClientSecret}",
+      "isRequired": false
+    },
+    "DbName": {
+      "type": "parameter",
+      "displayName": "Database Name",
+      "description": "The Database Name",
+      "datatype": "text",
+      "replaces": "{DbName}"
+    },
+    "EnableMicrosoftGraph": {
+      "type": "parameter",
+      "displayName": "Enable Microsoft Graph Service API",
+      "description": "Enable Microsoft Graph Service API",
+      "datatype": "bool",
+      "defaultValue": "false"
+    },
+    "EnableLogger": {
+      "type": "parameter",
+      "displayName": "Enable Logger Service",
+      "description": "Enables Logger Service",
+      "datatype": "bool",
+      "defaultValue": "true"
+    },
+    "EnableGlobalErrorHandler": {
+      "displayName": "Enable Global Error Handler",
+      "type": "parameter",
+      "description": "Enables Global Error Handler Middleware",
+      "datatype": "bool",
+      "defaultValue": "true"
+    },
+    "EnableRequestResponseLogger": {
+      "type": "parameter",
+      "displayName": "Enable Request and Response Logger Middleware",
+      "description": "Captures and log any request or response made to the app",
+      "datatype": "bool",
+      "defaultValue": "false"
+    },
+    "EnableHttpClientApi": {
+      "type": "parameter",
+      "displayName": "Enable HTTP Client for external API with optional hashing validator",
+      "description": "Enable HTTP Client for external API with optional hashing validator",
+      "datatype": "bool",
+      "defaultValue": "false"
+    },
+    "EnableHashEncryptionValidation": {
+      "type": "parameter",
+      "displayName": "Enable Hash Encryption Validation",
+      "description": "Enable Hash Encryption Validation to make or receive HTTP Request",
+      "datatype": "bool",
+      "defaultValue": "false"
+    },
+    "EnableMailServices": {
+      "type": "parameter",
+      "displayName": "Enable Mail Services",
+      "description": "Enables Mail Service",
+      "datatype": "bool",
+      "defaultValue": "true"
+    },
+    "EnableReportingServices": {
+      "type": "parameter",
+      "displayName": "Enable Reporting Services",
+      "description": "Enables Reporting Services",
+      "datatype": "bool",
+      "defaultValue": "true"
+    },
+    "EnableResponseWrapper": {
+      "type": "parameter",
+      "displayName": "Enable Response Wrapper Middleware",
+      "description": "Enables Response Wrapper in Responses (Custom Response on Return Responses)",
+      "datatype": "bool",
+      "defaultValue": "true"
+    },
+    "EnableRoutingLowerCase": {
+      "type": "parameter",
+      "displayName": "Enable Routing with lowercase urls",
+      "description": "Enables routing with lowercase urls",
+      "datatype": "bool",
+      "defaultValue": "true"
+    },
+    "EnableAutoMapper": {
+      "type": "parameter",
+      "description": "Enables AutoMapper Config",
+      "displayName": "Enable AutoMapper",
+      "datatype": "bool",
+      "defaultValue": "false"
+    },
+    "EnableFileServer": {
+      "type": "parameter",
+      "displayName": "Enables Virtual File Server",
+      "description": "Enables File Server Virtual Directory Configuration",
+      "datatype": "bool",
+      "defaultValue": "false"
+    },
+    "IncludeDevAppSettings": {
+      "type": "parameter",
+      "displayName": "Configure Development Mode",
+      "description": "Add appsettings.Development",
+      "datatype": "bool",
+      "defaultValue": "true"
+    },
+    "IncludeStagingAppSettings": {
+      "type": "parameter",
+      "displayName": "Configure Staging Mode",
+      "description": "Add appsettings.Staging and Web.Staging",
+      "datatype": "bool",
+      "defaultValue": "true"
+    },
+    "IsCatador": {
+      "type": "computed",
+      "value": "(Company == \"Catador\")"
+    },
+    "IsBona": {
+      "type": "computed",
+      "value": "(Company == \"Bona\")"
+    }
+  },
+  "sources": [
+    {
+      "source": "./",
+      "target": "./",
+      "exclude": [
+        "**/[Bb]in/**",
+        "**/[Oo]bj/**",
+        ".template.config/**/*",
+        "**/*.filelist",
+        "**/*.user",
+        "**/*.lock.json",
+        ".git/**/*",
+        "ProjectFiles/**" // ← prevent both .csproj files from being copied
+      ],
+      "modifiers": [
+        {
+          "include": [
+            "**/*.cs",
+            "**/*.csproj",
+            "**/launchSettings.json"
+          ],
+          "copyOnly": false
+        },
+        {
+          "condition": "(!IncludeDevAppSettings)",
+          "exclude": [
+            "SingleProjectWebTemplate/appsettings.Development.json"
+          ]
+        },
+        {
+          "condition": "(!IncludeStagingAppSettings)",
+          "exclude": [
+            "SingleProjectWebTemplate/appsettings.Staging.json",
+            "SingleProjectWebTemplate/Web.Staging.config"
+          ]
+        },
+        {
+          "condition": "(!EnableAutoMapper)",
+          "exclude": [
+            "**/Mappings/**"
+          ]
+        },
+        {
+          "condition": "(Company == 'Catador')",
+          "include": [
+            "_ViewImports.Catador.cshtml"
+          ],
+          "rename": {
+            "_ViewImports.Catador.cshtml": "_ViewImports.cshtml"
+          }
+        },
+        {
+          "condition": "(Company == 'Bona')",
+          "include": [
+            "_ViewImports.Bona.cshtml"
+          ],
+          "rename": {
+            "_ViewImports.Bona.cshtml": "_ViewImports.cshtml"
+          }
+        }
+      ]
+    },
+    {
+      "source": "ProjectFiles/Catador",
+      "target": "SingleProjectWebTemplate",
+      "condition": "(Company == 'Catador')",
+      "modifiers": [
+        {
+          "include": [
+            "appsettings.Development.json",
+            "appsettings.Staging.json"
+          ]
+        }
+      ]
+    },
+    {
+      "source": "ProjectFiles/Bona",
+      "target": "SingleProjectWebTemplate",
+      "condition": "(Company == 'Bona')",
+      "modifiers": [
+        {
+          "include": [
+            "appsettings.Development.json",
+            "appsettings.Staging.json"
+          ]
+        }
+      ]
+    },
+    {
+      "source": "ProjectFiles/Catador/Views",
+      "target": "SingleProjectWebTemplate/Views",
+      "condition": "(Company == 'Catador')"
+    },
+    {
+      "source": "ProjectFiles/Bona/Views",
+      "target": "SingleProjectWebTemplate/Views",
+      "condition": "(Company == 'Bona')"
+    },
+    {
+      "source": "ProjectFiles/Catador/wwwroot",
+      "target": "SingleProjectWebTemplate/wwwroot",
+      "condition": "(Company == 'Catador')"
+    },
+    {
+      "source": "ProjectFiles/Bona/wwwroot",
+      "target": "SingleProjectWebTemplate/wwwroot",
+      "condition": "(Company == 'Bona')"
+    }
+  ],
+  "primaryOutputs": [
+    {
+      "path": "SingleProjectWebTemplate.csproj"
+    },
+    {
+      "condition": "(HostIdentifier != \"dotnetcli\")",
+      "path": "README.md"
+    }
+  ],
+  "postActions": [
+    {
+      "description": "Install brand-specific NuGet package",
+      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+      "args": {
+        "executable": "cmd",
+        "args": "/c scripts\\post-install.bat",
+        "redirectStandardOutput": true,
+        "redirectStandardError": true
+      },
+      "manualInstructions": [
+        {
+          "text": "Run 'scripts\\install-brand-package.ps1 -Company <Catador|Bona>' manually if this step fails."
+        }
+      ],
+      "continueOnError": true
+    },
+    {
+      "condition": "(HostIdentifier != \"dotnetcli\")",
+      "description": "Opens README.md in the editor",
+      "manualInstructions": [],
+      "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
+      "args": {
+        "files": "1"
+      },
+      "continueOnError": true
+    }
+  ]
+}

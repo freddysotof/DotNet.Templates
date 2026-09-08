@@ -1,0 +1,61 @@
+# azure-pipelines-publish-template
+
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+name: 1.0.$(Rev:r)
+jobs:
+- job: BuildTemplate
+  displayName: Build Custom Template 
+  steps:
+  - task: DotNetCoreCLI@2
+    displayName: dotnet restore
+    inputs:
+      command: 'restore'
+      feedsToUse: 'select'
+      vstsFeed: '225bd5c8-b529-4a6b-af19-73c9a584ffff'
+  - task: DotNetCoreCLI@2
+    displayName: dotnet build
+    inputs:
+      command: 'build'
+      projects: '**/Catador-Project-Templates.csproj'
+
+- job: PackAndPublishNugetPackage
+  displayName: Pack and publish the nuget package
+  dependsOn: BuildTemplate
+  condition: succeeded()
+  steps:
+  - task: DotNetCoreCLI@2
+    displayName: dotnet restore
+    inputs:
+      command: 'restore'
+      feedsToUse: 'select'
+      vstsFeed: '225bd5c8-b529-4a6b-af19-73c9a584ffff'
+  - task: DotNetCoreCLI@2
+    displayName: dotnet pack
+    inputs:
+      command: 'pack'
+      packagesToPack:  '**/Catador-Project-Templates.csproj'
+      versioningScheme: 'byBuildNumber'
+  - task: DotNetCoreCLI@2
+    displayName: dotnet push
+    inputs:
+      command: 'push'
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+      nuGetFeedType: 'internal'
+      publishVstsFeed: '225bd5c8-b529-4a6b-af19-73c9a584ffff'
+  - task: PublishBuildArtifacts@1
+    displayName: publish artifact
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      TargetPath: '\\CatadorTemplates\$(Build.DefinitionName)\$(Build.BuildNumber)'
+      publishLocation: 'Container'

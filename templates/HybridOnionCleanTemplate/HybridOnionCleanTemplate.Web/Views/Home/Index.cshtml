@@ -1,0 +1,8 @@
+﻿@using Microsoft.Extensions.Options
+@inject IOptionsSnapshot<AppInfo> _optionSnapshot;
+@{
+    AppInfo appInfo = _optionSnapshot.Value;
+    ViewData["Title"] = $"Bienvenido a {appInfo.SystemTitle}";
+    ViewData["Icon"] = "fa fa-th-list";
+    ViewData["Description"] = "";
+}

@@ -1,0 +1,43 @@
+trigger:
+- main
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+name: 8.0.$(Rev:r)
+
+variables:
+  artifactName: 'nuget-packages'
+
+jobs:
+- job: PackTemplate
+  displayName: Pack and publish the custom .NET template
+  steps:
+  - task: UseDotNet@2
+    displayName: Use .NET 6
+    inputs:
+      version: '6.0.x'
+
+  - task: DotNetCoreCLI@2
+    displayName: dotnet pack template
+    inputs:
+      command: 'pack'
+      packagesToPack: '**/Templates.csproj'
+      versioningScheme: 'byBuildNumber'
+      outputDir: '$(Build.ArtifactStagingDirectory)'
+
+  - task: DotNetCoreCLI@2
+    displayName: dotnet push to Azure Artifacts feed
+    inputs:
+      command: 'push'
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+      nuGetFeedType: 'internal'
+      publishVstsFeed: '9fe676bb-79cb-4646-80df-00d408ad4989'  # <-- Replace with your feed ID
+
+  - task: PublishBuildArtifacts@1
+    displayName: publish .nupkg as downloadable artifact
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: '$(artifactName)'
+      publishLocation: 'Container'

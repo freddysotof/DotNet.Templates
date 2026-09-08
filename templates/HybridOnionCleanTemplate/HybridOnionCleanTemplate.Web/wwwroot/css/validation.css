@@ -1,0 +1,29 @@
+﻿
+.is-invalid {
+    /*border-color: var(--secondary) !important;*/
+    /*box-shadow: inset 0 0 0 1px red !important;*/
+    /*border-bottom: 1px solid red !important;*/
+    margin-bottom: 0 !important;
+}
+
+.input-invalid {
+    border-color: var(--secondary) !important;
+    box-shadow: inset 0 0 0 1px red !important;
+    /*border-bottom: 1px solid red !important;*/
+}
+
+.input-form.required ~ .form-label:after {
+    content: " *" !important;
+    color: red !important;
+}
+
+
+.input-form.required:focus {
+    -webkit-box-shadow: 0 1px 0 0 #00c851 !important;
+    box-shadow: 0 1px 0 0 #00c851 !important
+}
+
+/*.input-form.required:valid {
+    border-color: #00c851 !important
+}
+*/

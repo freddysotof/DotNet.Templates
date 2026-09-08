@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+	<PackageId>HybridOnionCleanApiTemplate</PackageId>
+    <PackageVersion>1.0.1</PackageVersion>
+    <PackageTags>dotnet-new;templates</PackageTags>
+    <Authors>Freddy Soto</Authors>
+    <Company>{CompanyKey}</Company>
+	  <!-- 
+	  <TargetFramework>{TargetFramework}</TargetFramework>
+	 -->
+	  <TargetFramework>net8.0</TargetFramework>
+
+	  <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Identity.Web" Version="4.14.2" />
+    <PackageReference Include="Microsoft.Identity.Web.MicrosoftGraph" Version="4.14.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Config\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HybridOnionCleanApiTemplate.Application\HybridOnionCleanApiTemplate.Application.csproj" />
+    <ProjectReference Include="..\HybridOnionCleanApiTemplate.Infrastructure\HybridOnionCleanApiTemplate.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Core">
+      <HintPath>..\..\..\DLLs\Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Logger">
+      <HintPath>..\..\..\DLLs\Logger.dll</HintPath>
+    </Reference>
+    <Reference Include="Middlewares">
+      <HintPath>..\..\..\..\DotNet.Libraries\Middlewares\bin\Debug\net8.0\Middlewares.dll</HintPath>
+    </Reference>
+    <Reference Include="Models">
+      <HintPath>..\..\..\DLLs\Models.dll</HintPath>
+    </Reference>
+    <Reference Include="Resources">
+      <HintPath>..\..\..\DLLs\Resources.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+	<!-- Brand-specific packages -->
+	<!--#if (Company == "Company")-->
+
+	<!--#endif-->
+</Project>

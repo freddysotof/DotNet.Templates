@@ -1,0 +1,90 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33414.496
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SingleProjectWebTemplate", "SingleProjectWebTemplate", "{41E968F5-7559-449B-813D-9212DCB78F6C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HybridOnionCleanTemplate", "HybridOnionCleanTemplate", "{B5C239BC-1945-401D-8A0B-7DA9263F4556}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HybridOnionCleanApiTemplate", "HybridOnionCleanApiTemplate", "{2982094D-3D5C-4E89-9652-CC983BDC4D37}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SingleProjectWebTemplate", "templates\SingleProjectWebTemplate\SingleProjectWebTemplate\SingleProjectWebTemplate.csproj", "{9D48C3DD-A65E-4274-B994-EC7104326D37}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HybridOnionCleanTemplate.Application", "templates\HybridOnionCleanTemplate\HybridOnionCleanTemplate.Application\HybridOnionCleanTemplate.Application.csproj", "{08898943-1C38-4CA6-905F-2A9C27AAF11E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HybridOnionCleanTemplate.Domain", "templates\HybridOnionCleanTemplate\HybridOnionCleanTemplate.Domain\HybridOnionCleanTemplate.Domain.csproj", "{69C4EA9A-E958-4424-943E-D50888AAD685}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HybridOnionCleanTemplate.Infrastructure", "templates\HybridOnionCleanTemplate\HybridOnionCleanTemplate.Infrastructure\HybridOnionCleanTemplate.Infrastructure.csproj", "{2AA83507-3568-4134-A086-F4D611C4A3E1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HybridOnionCleanTemplate.Web", "templates\HybridOnionCleanTemplate\HybridOnionCleanTemplate.Web\HybridOnionCleanTemplate.Web.csproj", "{ED5DA75D-FB63-4F46-BE01-999952517E67}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HybridOnionCleanApiTemplate.Api", "templates\HybridOnionCleanApiTemplate\HybridOnionCleanApiTemplate.Api\HybridOnionCleanApiTemplate.Api.csproj", "{2E74819D-D03C-4ADD-9896-93723A0A037E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HybridOnionCleanApiTemplate.Application", "templates\HybridOnionCleanApiTemplate\HybridOnionCleanApiTemplate.Application\HybridOnionCleanApiTemplate.Application.csproj", "{F012FEFE-50F2-4A06-AA2D-BAC6A85FE3D5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HybridOnionCleanApiTemplate.Domain", "templates\HybridOnionCleanApiTemplate\HybridOnionCleanApiTemplate.Domain\HybridOnionCleanApiTemplate.Domain.csproj", "{A2BFBC1A-FC08-4EFA-AD58-F78DFB3B8F3F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HybridOnionCleanApiTemplate.Infrastructure", "templates\HybridOnionCleanApiTemplate\HybridOnionCleanApiTemplate.Infrastructure\HybridOnionCleanApiTemplate.Infrastructure.csproj", "{5CBBF285-11FD-4C18-8962-7CA2740D9AC1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9D48C3DD-A65E-4274-B994-EC7104326D37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D48C3DD-A65E-4274-B994-EC7104326D37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D48C3DD-A65E-4274-B994-EC7104326D37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D48C3DD-A65E-4274-B994-EC7104326D37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08898943-1C38-4CA6-905F-2A9C27AAF11E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08898943-1C38-4CA6-905F-2A9C27AAF11E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08898943-1C38-4CA6-905F-2A9C27AAF11E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08898943-1C38-4CA6-905F-2A9C27AAF11E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69C4EA9A-E958-4424-943E-D50888AAD685}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69C4EA9A-E958-4424-943E-D50888AAD685}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69C4EA9A-E958-4424-943E-D50888AAD685}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69C4EA9A-E958-4424-943E-D50888AAD685}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AA83507-3568-4134-A086-F4D611C4A3E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AA83507-3568-4134-A086-F4D611C4A3E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AA83507-3568-4134-A086-F4D611C4A3E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AA83507-3568-4134-A086-F4D611C4A3E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED5DA75D-FB63-4F46-BE01-999952517E67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED5DA75D-FB63-4F46-BE01-999952517E67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED5DA75D-FB63-4F46-BE01-999952517E67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED5DA75D-FB63-4F46-BE01-999952517E67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E74819D-D03C-4ADD-9896-93723A0A037E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E74819D-D03C-4ADD-9896-93723A0A037E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E74819D-D03C-4ADD-9896-93723A0A037E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E74819D-D03C-4ADD-9896-93723A0A037E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F012FEFE-50F2-4A06-AA2D-BAC6A85FE3D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F012FEFE-50F2-4A06-AA2D-BAC6A85FE3D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F012FEFE-50F2-4A06-AA2D-BAC6A85FE3D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F012FEFE-50F2-4A06-AA2D-BAC6A85FE3D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2BFBC1A-FC08-4EFA-AD58-F78DFB3B8F3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2BFBC1A-FC08-4EFA-AD58-F78DFB3B8F3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2BFBC1A-FC08-4EFA-AD58-F78DFB3B8F3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2BFBC1A-FC08-4EFA-AD58-F78DFB3B8F3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CBBF285-11FD-4C18-8962-7CA2740D9AC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CBBF285-11FD-4C18-8962-7CA2740D9AC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CBBF285-11FD-4C18-8962-7CA2740D9AC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CBBF285-11FD-4C18-8962-7CA2740D9AC1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9D48C3DD-A65E-4274-B994-EC7104326D37} = {41E968F5-7559-449B-813D-9212DCB78F6C}
+		{08898943-1C38-4CA6-905F-2A9C27AAF11E} = {B5C239BC-1945-401D-8A0B-7DA9263F4556}
+		{69C4EA9A-E958-4424-943E-D50888AAD685} = {B5C239BC-1945-401D-8A0B-7DA9263F4556}
+		{2AA83507-3568-4134-A086-F4D611C4A3E1} = {B5C239BC-1945-401D-8A0B-7DA9263F4556}
+		{ED5DA75D-FB63-4F46-BE01-999952517E67} = {B5C239BC-1945-401D-8A0B-7DA9263F4556}
+		{2E74819D-D03C-4ADD-9896-93723A0A037E} = {2982094D-3D5C-4E89-9652-CC983BDC4D37}
+		{F012FEFE-50F2-4A06-AA2D-BAC6A85FE3D5} = {2982094D-3D5C-4E89-9652-CC983BDC4D37}
+		{A2BFBC1A-FC08-4EFA-AD58-F78DFB3B8F3F} = {2982094D-3D5C-4E89-9652-CC983BDC4D37}
+		{5CBBF285-11FD-4C18-8962-7CA2740D9AC1} = {2982094D-3D5C-4E89-9652-CC983BDC4D37}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C2918456-D566-465B-B5EC-7B22EEE9583C}
+	EndGlobalSection
+EndGlobal

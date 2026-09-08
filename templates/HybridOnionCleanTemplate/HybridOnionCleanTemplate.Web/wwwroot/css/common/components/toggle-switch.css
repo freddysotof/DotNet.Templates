@@ -1,0 +1,35 @@
+/*Switch info*/
+.switch-info label input[type=checkbox]:checked + .lever {
+    background-color: #33b5e5 !important;
+}
+
+    .switch-info label input[type=checkbox]:checked + .lever:after {
+        background-color: #0099CC !important;
+    }
+
+/* Switch danger */
+.switch-danger label input[type=checkbox]:checked + .lever {
+    background-color: #ff4444 !important;
+}
+
+    .switch-danger label input[type=checkbox]:checked + .lever:after {
+        background-color: #CC0000 !important;
+    }
+
+/* Switch warning */
+.switch-warning label input[type=checkbox]:checked + .lever {
+    background-color: #ffbb33 !important;
+}
+
+    .switch-warning label input[type=checkbox]:checked + .lever:after {
+        background-color: #FF8800 !important;
+    }
+
+/* Switch success */
+/*.switch-success label input[type=checkbox]:checked + .lever {
+    background-color: #00C851 !important;
+}
+
+    .switch-success label input[type=checkbox]:checked + .lever:after {
+        background-color: #007E33 !important;
+    }*/

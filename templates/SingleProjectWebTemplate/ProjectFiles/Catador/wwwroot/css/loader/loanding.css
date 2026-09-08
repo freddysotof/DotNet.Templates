@@ -1,0 +1,115 @@
+﻿#Background {
+    position: fixed;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 9999999;
+    background-color: #808080;
+    filter: alpha(opacity=80);
+    opacity: 0.9;
+}
+
+#Progress {
+    border-width: 0px;
+    position: fixed;
+    border-radius: 10px;
+    padding: 50px;
+    background-color: white !important;
+    font-size: 15px;
+    color: black;
+    left: 40%;
+    top: 40%;
+}
+
+
+
+@media only screen and (max-width: 479px) {
+
+    #Background {
+        position: fixed;
+        text-align: center;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 9999999;
+        background-color: #808080;
+        filter: alpha(opacity=80);
+        opacity: 0.9;
+    }
+
+    #Progress {
+        border-width: 0px;
+        position: fixed;
+        border-radius: 10px;
+        padding: 50px;
+        background-color: white !important;
+        font-size: 15px;
+        color: black;
+        left: 6%;
+        top: 40%;
+    }
+}
+
+
+@media only screen and (max-width: 740px) {
+
+    #Background {
+        position: fixed;
+        text-align: center;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 9999999;
+        background-color: #808080;
+        filter: alpha(opacity=80);
+        opacity: 0.9;
+    }
+
+    #Progress {
+        border-width: 0px;
+        position: fixed;
+        border-radius: 10px;
+        padding: 50px;
+        background-color: white !important;
+        font-size: 15px;
+        color: black;
+        left: 40%;
+        top: 40%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+
+    #Background {
+        position: fixed;
+        text-align: center;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 9999999;
+        background-color: #808080;
+        filter: alpha(opacity=80);
+        opacity: 0.9;
+    }
+
+    #Progress {
+        border-width: 0px;
+        position: fixed;
+        border-radius: 10px;
+        padding: 50px;
+        background-color: white !important;
+        font-size: 15px;
+        color: black;
+        left: 6%;
+        top: 40%;
+    }
+}

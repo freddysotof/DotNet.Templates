@@ -1,0 +1,28 @@
+﻿
+.btn-floating-container, #btn-floating-container {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    display: flex;
+    color: var(--white) !important;
+    z-index: 1000 !important;
+}
+
+    .btn-floating-container, #btn-floating-container button {
+        color: var(--white) !important;
+    }
+
+
+.btn-floating-vertical-container, #btn-floating-vertical-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: end !important;
+    gap: .5rem !important
+}
+
+.btn-floating-horizontal-container, #btn-floating-horizontal-container {
+    display: flex !important;
+    /*flex-direction: column !important;*/
+    align-items: end !important;
+    gap: .5rem !important
+}

@@ -1,0 +1,114 @@
+﻿
+tr.odd td:first-child,
+tr.even td:first-child {
+    padding-left: 2em;
+}
+
+.has-error .select2-selection {
+    border: 1px solid #a94442;
+    border-radius: 4px;
+}
+
+.input-validation-error ~ .select2 .select2-selection__rendered {
+    border: 1px solid red;
+}
+
+tr.group1,
+tr.group1:hover {
+    background-color: #397EF5 !important;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+
+input[type="file"] {
+    display: flex;
+}
+
+.imageThumb {
+    max-height: 250px;
+    border: 2px solid;
+    padding: 1px;
+    cursor: pointer;
+    max-width: 250px;
+}
+
+.pip {
+    display: inline-block;
+    margin: 10px 10px 0 0;
+}
+
+.remove {
+    display: block;
+    background: red;
+    border: 1px solid black;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+}
+
+    .remove:hover {
+        background: white;
+        color: black;
+    }
+
+.Requeridos {
+    font-weight: bold;
+    color: red;
+}
+
+.img-upload-btn {
+    position: relative;
+    overflow: hidden;
+    padding-top: 95%;
+}
+
+    .img-upload-btn input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        background: white;
+        cursor: inherit;
+        display: block;
+    }
+
+    .img-upload-btn i {
+        position: absolute;
+        height: 16px;
+        width: 16px;
+        top: 50%;
+        left: 50%;
+        margin-top: -8px;
+        margin-left: -8px;
+    }
+
+.btn-radio {
+    position: relative;
+    overflow: hidden;
+}
+
+    .btn-radio input[type=radio] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        background: white;
+        cursor: inherit;
+        display: block;
+    }
+     

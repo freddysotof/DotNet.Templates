@@ -1,0 +1,395 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor _contextAccessor
+@using Microsoft.Extensions.Options
+@using Models.Entities.Auth
+@using Components.Views.Shared
+@inject IOptions<AppInfo> _appInfo
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <component type="typeof(HtmlHeader)" render-mode="Static" />
+    <link href="~/css/summernote/summernote.min.css" rel="stylesheet" />
+
+    <!-- Main CSS-->
+    <link href="~/css/holdon.css" rel="stylesheet " />
+    <link rel="stylesheet" type="text/css" href="~/css/bootstrap/bootstrap-v5.min.css">
+    <link rel="stylesheet" type="text/css" href="~/css/main.css">
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+@*    <link rel="stylesheet" href="https://cdn.datatables.net/plug-ins/1.13.4/api/sum().js" />*@
+    <link href="~/css/responsive.dataTables.min.css" rel="stylesheet" />
+    <link href="~/css/select2-bootstrap.css" rel="stylesheet" />
+    <link href="~/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css">
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/HoldOn.css" rel="stylesheet" />
+    <link href="~/css/dropzone//dropzone.min.css" rel="stylesheet" />
+    <link href="~/css/dropzone/basic.css" rel="stylesheet" />
+    <link href="~/css/dropzone/basic.min.css" rel="stylesheet" />
+    <link href="~/css/dropzone/dropzone.css" rel="stylesheet" />
+    <link href="~/css/bootstrap-tagsinput.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <style>
+        td {
+            padding: 0px;
+        }
+
+        .sTD2 {
+            width: 40%;
+            word-wrap: break-word;
+        }
+
+        .has-error {
+            border: 1px solid #dc3545 !important;
+            padding-right: calc(1.5em + 0.75rem);
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23dc3545' viewBox='-2 -2 7 7'%3e%3cpath stroke='%23dc3545' d='M0 0l3 3m0-3L0 3'/%3e%3ccircle r='.5'/%3e%3ccircle cx='3' r='.5'/%3e%3ccircle cy='3' r='.5'/%3e%3ccircle cx='3' cy='3' r='.5'/%3e%3c/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center right calc(0.375em + 0.1875rem);
+            background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+        }
+
+        .lightRed3 {
+            background-color: rgb(247, 228, 225);
+            color: black;
+            /*font-weight: bold;*/
+        }
+
+        .selected {
+            background-color: #dde5ed;
+            color: black;
+        }
+
+        .lightWrn {
+            background-color: #FFFCC8;
+            color: black;
+            border: none;
+        }
+
+        .with-padding {
+            padding: 1px 2px 1px 20px;
+            height: 10px;
+        }
+
+        .modal-body {
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+
+        .myScroll {
+            max-height: calc(80vh - 150px);
+            overflow-y: auto;
+            scrollbar-width: thin; /* "auto" or "thin" */
+            scrollbar-color: #00397E #E5E5E5; /* scroll thumb and track */
+        }
+    </style>
+</head>
+<body class="app sidebar-mini">
+    <!-- Navbar-->
+    <header class="app-header">
+        <a class="app-header__logo" href="/Home/Index">@_appInfo.Value.Mode @_appInfo.Value.SystemKey</a>
+        <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="/Home/Index" onclick="onClickSidebar(event)" aria-label="Hide Sidebar"></a>
+        <!-- Navbar Right Menu-->
+        <ul class="app-nav">
+            <li class="app-search">
+                <p class="app-sidebar__user-name" style="color:white;" id="lgUs"></p>
+            </li>
+
+            <component type="typeof(LoginDisplay)" render-mode="Static" />
+        </ul>
+    </header>
+    <!-- Sidebar menu-->
+    <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+    <aside class="app-sidebar">
+        @await Component.InvokeAsync("UserRoleInfo")
+        <ul class="app-menu">
+
+            @if (_appInfo.Value.ApiAuthentication)
+            {
+                @await Component.InvokeAsync("ApiNavBar")
+            }
+            else
+            {
+                @await Component.InvokeAsync("NavBar")
+            }
+        </ul>
+
+
+    </aside>
+<main class="app-content">
+    <div class="app-title">
+        <div class="flex-grow-1">
+            <h1 id="view-data-title"><i class="@ViewData["Icon"]"></i>&nbsp; @Html.Raw(@ViewData["Title"]) </h1>
+            <div id="view-data-description">@Html.Raw(@ViewData["Description"])</div>
+
+        </div>
+    </div>
+    <div class="tile">
+        <div id="body-content" class="tile-body">
+            @RenderBody()
+            @await Component.InvokeAsync("AccesoSistemas")
+            <hr />
+                <component type="typeof(Footer)" render-mode="Static" />
+        </div>
+    </div>
+</main>
+    <script src="~/js/commons/Fetch.js"></script>
+    <script src="~/js/commons/Common.js"></script>
+    <script type="text/javascript">
+        const userId = '@_contextAccessor.GetCurrentUserName()'
+        const appUrl = '@_contextAccessor.GetAppUrl()';
+        const appPathBase = '@_contextAccessor.GetPathBase()';
+        const appBaseUrl = '@(_contextAccessor.GetBaseUrl())';
+
+    </script>
+
+    <!-- Essential javascripts for application to work-->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="~/js/bootstrap/popper.min.js"></script>
+    <script src="~/js/bootstrap/bootstrap-v5.min.js"></script>
+    <script src="~/js/bootstrap/bootstrap.min.js"></script>
+    <script src="~/js/main.js"></script>
+    @*<script src="~/scripts/js/main.js"></script>*@
+
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="~/js/plugins/pace.min.js"></script>
+
+    <!-- Page specific javascripts-->
+    <script type="text/javascript" src="~/js/plugins/chart.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/bootstrap/datepicker/bootstrap-datepicker.js"></script>
+    <script src="~/js/plugins/moment.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script src="~/js/notify.js"></script>
+    <script src="~/js/notify.min.js"></script>
+    <script src="~/js/plugins/bootstrap-notify.min.js"></script>
+    <script src="~/js/bootstrap/bootstrap-select.min.js" asp-append-version="true"></script>
+
+
+    @*<script src="~/scripts/gijgo.min.js"></script>*@
+    <script src="~/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/js/datatable/dataTables.responsive.min.js"></script>
+    <script src="~/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/summernote/summernote.min.js" asp-append-version="true"></script>
+
+    <script src="~/js/loader/holdon.js"></script>
+    <script src="~/js/loader/holdon.min.js"></script>
+    <script src="~/js/plugins/select2.min.js"></script>
+    <script src="~/js/jquery/jquery.validate.min.js"></script>
+    <script src="~/js/jquery/jquery.validate.unobtrusive.js"></script>
+    <script src="~/js/jquery/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/jquery/jquery.mask.js"></script>
+    <script src="~/js/dropzone/dropzone.min.js"></script>
+  
+    <script src="~/js/bootstrap/bootstrap-tagsinput.js"></script>
+    <script src="~/js/plugins/sweetalert2.min.js"></script>
+    <script src="~/js/plugins/swal2.js"></script>
+
+
+    <script src="~/js/bootstrap/stepper/bs-stepper.min.js" asp-append-version="true"></script>
+    <script src="~/js/commons/components/FSBootstrapSelect.js" asp-append-version="true"></script>
+    <script src="~/js/commons/components/FSMaterialInput.js" asp-append-version="true"></script>
+    <script src="~/js/commons/components/FSBootstrapTab.js" asp-append-version="true"></script>
+    <script src="~/js/commons/components/FSBootstrapToggle.js" asp-append-version="true"></script>
+    <script src="~/js/commons/components/FSBootstrapToolTip.js" asp-append-version="true"></script>
+    <script src="~/js/commons/components/FSBootstrapSummerNote.js" asp-append-version="true"></script>
+    <script src="~/js/commons/components/FSBootstrapSummerNote.js" asp-append-version="true"></script>
+    <script src="~/js/commons/components/FSTreeView.js" asp-append-version="true"></script>
+    <script src="~/js/commons/vanilla-masker.js" asp-append-version="true"></script>
+    <script src="~/js/commons/components/FSMaskInput.js" asp-append-version="true"></script>
+    @* <script src="~/js/commons/components/FSBootstrapAutoComplete.js" asp-append-version="true"></script> *@
+    @*<script src="~/js/commons/components/FSDragAndDrop.js" asp-append-version="true"></script>*@
+    <script src="~/js/commons/components/FSPickADate.js" asp-append-version="true"></script>
+    <script src="~/js/commons/components/FSButton.js" asp-append-version="true"></script>
+
+    <script>
+
+    
+        const onClickSidebar = (e) => {
+       e.stopPropagation();
+       e.preventDefault();
+
+
+       const bodyEl = getElementInstance('app');
+       const isOpen = bodyEl.classList.contains('sidenav-toggled');
+       // // Custom behavior when sidebar is closed
+       if (isOpen) {
+           bodyEl.classList.remove('sidenav-toggled');
+           $('#menu_logo_open').css({
+               'display': 'flex'
+           });
+           $('#menu_logo_closed').css({
+               'display': 'none'
+           });
+           $('.app-sidebar__user>div').css({
+               'align-items': 'normal',
+           })
+           // your custom behavior here
+       } else {
+           bodyEl.classList.add('sidenav-toggled');
+           $('#menu_logo_open').css({
+               'display': 'none'
+           });
+           $('#menu_logo_closed').css({
+               'display': 'flex'
+           });
+           $('.app-sidebar__user>div').css({
+               'align-items': 'center'
+           })
+         
+           // optional behavior when open
+       }
+   }
+        const showLoader = (theme = 'custom', spinnerColor = 'F29D35', message = 'Cargando datos, por favor espere', backgroundColor = '#344055', textColor = 'white') => {
+            //THEMES
+            /**
+             *  sk-rect
+             *  sk-bounce
+             *  sk-folding-cube
+             *  sk-circle
+             *  sk-dot
+             *  sk-bounce
+             *  sk-falding-circle
+             *  sk-cube-grid
+             *  custom
+             *  **/
+            const loaderElement = document.getElementById('holdon-overlay');
+            if (!loaderElement) {
+                HoldOn.open({
+                    theme: theme,
+                    // custom content here
+                    content: `<div class="spinner-border text-dark" style="color:#${spinnerColor}!important" role="status">
+                                                                                                                                                                                                                                                                                <span class="visually-hidden"></span>
+                                                                                                                                                                                                                                                                            </div>`,
+                    // loading message here
+                    message: message,
+                    // background color
+                    backgroundColor: backgroundColor,
+                    // text color
+                    textColor: textColor,
+                });
+            }
+        }
+     
+
+        $(document).ready(() => {
+            $('#sBuscarSist').bind('keyup', function () {
+                var searchString = $(this).val();
+                // Search text
+                var text = $(this).val().toLowerCase();
+                // Hide all content class element
+                $('.contentS').hide();
+                // Search
+                $('.contentS .titleS').each(function () {
+                    if ($(this).text().toLowerCase().indexOf("" + text + "") != -1) {
+                        $(this).closest('.contentS').show();
+                    }
+                });
+            });
+        })
+
+
+        $("#dvLink").on('click', '.clGetUtl', function (e) {
+            e.preventDefault();
+            var url = $(this).data('url');
+            var id = $(this).data('id');
+            var sistema = $(this).data('sistema');
+            showLoader('sk-bounce', "", "Accediendo al Sistema " + sistema + " ,Espere por favor...");
+
+            setTimeout(function () {
+                window.location.href = url + "?id=" + id;
+                hideLoader();
+            }, 2000);
+        });
+
+        const hideLoader = () => HoldOn.close();
+
+        function loadModal(elm, texto, icon, ocultar) {
+            $(elm + ' #bTitulo').text(texto);
+            $(elm + ' #lbIcon').html(icon);
+
+            console.log(elm);
+            console.log($(elm + ' #bTitulo'));
+
+            if (ocultar == true) {
+                $(elm).modal("hide");
+            } else {
+
+                $(elm).modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+
+                $(".modal-header").on("mousedown", function (mousedownEvt) {
+                    var $draggable = $(this);
+                    var x = mousedownEvt.pageX - $draggable.offset().left,
+                        y = mousedownEvt.pageY - $draggable.offset().top;
+                    $("body").on("mousemove.draggable", function (mousemoveEvt) {
+                        $draggable.closest(".modal-dialog").offset({
+                            "left": mousemoveEvt.pageX - x,
+                            "top": mousemoveEvt.pageY - y
+                        });
+                    });
+                    $("body").one("mouseup", function () {
+                        $("body").off("mousemove.draggable");
+                    });
+                    $draggable.closest(".modal").one("bs.modal.hide", function () {
+                        $("body").off("mousemove.draggable");
+                    });
+                });
+            }
+        }
+
+        $(".select2").select2({
+            theme: "bootstrap"
+            //allowClear: true,
+            //width: '100%'
+        });
+
+        $('.summernote2').summernote({
+            height: 220,
+        });
+
+        function NotifyN(titulo, mensaje, tipo, icono) {
+            $.notify({
+                title: titulo,
+                message: mensaje,
+                icon: icono
+            }, {
+                type: tipo,
+                z_index: 2000,
+                placement: {
+                    from: "top",
+                    align: "right"
+                },
+            });
+        }
+
+        function MensageS2(icon, titulo, posicion) {
+            TMensage.fire({
+                icon: icon,
+                title: titulo,
+                position: posicion
+            });
+        }
+
+        function formatAllCurrency(num) {
+            num = num != null ? num : "0";
+            num = num.toString().replace(/\$|\,/g, '');
+            if (isNaN(num)) num = "0";
+            sign = (num == (num = Math.abs(num)));
+            num = Math.floor(num * 100 + 0.50000000001);
+            cents = num % 100;
+            num = Math.floor(num / 100).toString();
+            if (cents < 10) cents = "0" + cents;
+            for (var i = 0; i < Math.floor((num.length - (1 + i)) / 3); i++)
+                num = num.substring(0, num.length - (4 * i + 3)) + ',' + num.substring(num.length - (4 * i + 3));
+            return (((sign) ? '' : '-') + '$' + num + '.' + cents);
+        }
+
+
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

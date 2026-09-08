@@ -1,0 +1,476 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor _contextAccessor
+@using Microsoft.Extensions.Options
+@using CataBonModels.Entities.Auth
+@using CataBonModels.Configurations
+@inject IOptions<AppInfo> _appInfo
+@{ bool isAppsBona = _contextAccessor.HttpContext.User.HasClaim(x => x.Type == ClaimTypes.AuthorizationDecision && x.Value == "LobbyAuthenticated");
+}
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <component type="typeof(HtmlHeader)" render-mode="Static" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link href="~/css/main.css" rel="stylesheet" />
+        <link href="~/css/summernote/summernote.min.css" rel="stylesheet" />
+
+
+        @*Loader Freddy*@
+        <link href="~/css/loader/circleSpinningLoader.css" rel="stylesheet" />
+        <link href="~/css/loader/linearLoader.css" rel="stylesheet" />
+        <link href="~/css/loader/HoldOn.css" rel="stylesheet" />
+
+        @*Product Manager Special CSS*@
+        <link href="~/css/Layout.css" rel="stylesheet" />
+        <link href="~/css/common/components/toggle-switch.css" rel="stylesheet" />
+        <link href="~/css/dropzone/basic.css" rel="stylesheet" />
+        <link href="~/css/dropzone/dropzone.css" rel="stylesheet" />
+        <link href="~/css/validation.css" rel="stylesheet" />
+
+
+        <link href="~/css/mdb/components/datepicker/default.css" rel="stylesheet" />
+        <link href="~/css/mdb/components/datepicker/default-date.css" rel="stylesheet" />
+        <link href="~/css/mdb/components/datepicker/default-time.css" rel="stylesheet" />
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            rel="stylesheet" />
+        <!-- Material Design Bootstrap -->
+        <link href="~/css/mdb/mdb.min.css" rel="stylesheet" />
+        <link href="~/css/mdb/components/treeview.css" rel="stylesheet" />
+        <link href="~/css/mdb/components/autoincrement.css" rel="stylesheet" />
+        <link href="~/css/mdb/components/autocomplete.css" rel="stylesheet" />
+        <link href="~/css/mdb/components/scrollbar.css" rel="stylesheet" />
+        <link href="~/css/mdb/components/pro/pro-steppers.css" rel="stylesheet" />
+        <link href="~/css/mdb/components/pro/chips.css" rel="stylesheet" />
+        <link href="~/css/bootstrap/stepper/bs-stepper.min.css" rel="stylesheet" />
+        <link href="~/css/common/components/happy-checkbox.css" rel="stylesheet" />
+        <link href="~/css/components/pincode-input.min.css" rel="stylesheet" />
+        <link href="~/css/datatable/rowReorder.dataTables.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="~/css/datatable/responsive.dataTables.min.css" />
+        <link href="~/css/datatable/rowGroup.dataTables.min.css" rel="stylesheet" />
+        <link href="~/css/common/components/bootstrap-select.min.css" rel="stylesheet" />
+        <link href="~/css/sweetalert/bulma.css" rel="stylesheet">
+
+        <link href="~/css/select2/select2.min.css" rel="stylesheet"/>
+        <link href="~/css/select2/select2-bootstrap.css" rel="stylesheet" />
+
+        <link href="~/css/dlpradio.css" rel="stylesheet" />
+        <link href="~/css/loandinginmodal.css" rel="stylesheet" />
+        <link href="~/css/loanding.css" rel="stylesheet" />
+        <link href="~/css/checkbox.css" rel="stylesheet" />
+        <link href="~/css/btn-floating-container.css" rel="stylesheet"/>
+        <style>
+            td {
+                padding: 0px;
+            }
+
+            .has-error {
+                border: 1px solid #dc3545 !important;
+                padding-right: calc(1.5em + 0.75rem);
+                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23dc3545' viewBox='-2 -2 7 7'%3e%3cpath stroke='%23dc3545' d='M0 0l3 3m0-3L0 3'/%3e%3ccircle r='.5'/%3e%3ccircle cx='3' r='.5'/%3e%3ccircle cy='3' r='.5'/%3e%3ccircle cx='3' cy='3' r='.5'/%3e%3c/svg%3E");
+                background-repeat: no-repeat;
+                background-position: center right calc(0.375em + 0.1875rem);
+                background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+            }
+
+
+
+        </style>
+
+        <script src="~/js/font-awesome/kit.js"></script>
+    </head>
+    <!---Clase paraller marca como completado el step-->
+
+    <body class="app sidebar-mini">
+        <!-- Navbar-->
+        <header class="app-header">
+            <!-- Sidebar toggle button-->
+            <a class="app-sidebar__toggle"  href="/Home/Index" onclick="onClickSidebar(event)" aria-label="Hide Sidebar">
+                <i class="fas fa-bars"></i>
+            </a>
+            <a class="app-header__logo" href="@_contextAccessor.GetAppUrl()">@_appInfo.Value.Mode @_appInfo.Value.SystemKey</a>
+            <!-- Navbar Right Menu-->
+            <ul class="app-nav">
+                <component type="typeof(LoginDisplay)" render-mode="Static" />
+            </ul>
+        </header>
+        @if (isAppsBona)
+        {
+            <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+            <aside class="app-sidebar d-flex flex-column align-items-center">
+                <div class="app-sidebar__user">
+                </div>
+                @await Component.InvokeAsync("UserRoleInfo")
+                <ul class="app-menu w-100">
+                    @if (_appInfo.Value.ApiAuthentication){
+                        @await Component.InvokeAsync("ApiNavBar")
+                    }else {
+                        @await Component.InvokeAsync("NavBar")
+                    }
+                </ul>
+            </aside>
+        }
+    
+        <main class="app-content" style="@(!isAppsBona?"margin-left:0 !important":"")">
+            <div id="Background" style="display:none;">
+                <span id="Progress">
+                    <img src="~/images/loading.gif" />
+                    <br /><strong> Processing, please wait ...</strong>
+                </span>
+            </div>
+
+            <div class="app-title">
+                <div class="row">
+                    <div class="col-md-10 d-flex align-items-center">
+                        <h1 id="view-data-title">
+                            <i class="@ViewData["Icon"]"></i>&nbsp; @Html.Raw(@ViewData["Title"])
+                        </h1>
+                        <div id="view-data-description">@Html.Raw(@ViewData["Description"])</div>
+                    </div>
+                    <div class="col-md-2">
+                        @await Component.InvokeAsync("TitleLogo")
+                    </div>
+                </div>
+            </div>
+            <div class="tile">
+                <div id="body-content" class="tile-body">
+                    <input type="hidden" id="signalRConnectionId" />
+                    @RenderBody()
+                    <partial name="_MaterialModalPartial" />
+                    @await Component.InvokeAsync("AccesoSistemas")
+                    <component type="typeof(Footer)" render-mode="Static" />
+                </div>
+            </div>
+        </main>
+    
+        @*Script .NET 6.0*@
+        <script src="~/js/jquery-3.5.1.js"></script>
+        <script src="~/js/bootstrap/bootstrap.bundle.min.js"></script>
+        <script src="~/lib/plugins/jquery.dataTables.min.js"></script>
+        <script src="~/js/datatable/editor/dataTables.editor.min.js"></script>
+        <script src="~/lib/plugins/dataTables.bootstrap.min.js"></script>
+        <script src="~/js/main.js"></script>
+        <script src="~/js/jquery-ui.js"></script>
+        <script src="~/js/jquery-blockUI.js"></script>
+        <script src="~/js/moment.js"></script>
+
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/sweetAlert/sweetalert2-themes.min.js" asp-append-version="true"></script>
+
+        <script src="~/js/commons/components/FSDropzone.js" asp-append-version="true"></script>
+        <script src="~/js/summernote/summernote.min.js" asp-append-version="true"></script>
+        <script src="~/js/datatable/table.js" asp-append-version="true"></script>
+        <script src="~/js/datatable/main.js" asp-append-version="true"></script>
+        <script src="~/js/datatable/dataTables.responsive.min.js" asp-append-version="true"></script>
+        <script src="~/js/datatable/dataTables.rowReorder.min.js" asp-append-version="true"></script>
+        <script src="~/js/datatable/datatable-basic/basic.js" asp-append-version="true"></script>
+        <script src="~/js/datatable/datatable-basic/scrollable.js" asp-append-version="true"></script>
+        <script src="~/js/datatable/dataTables.rowGroup.min.js" asp-append-version="true"></script>
+        <script src="~/js/bootstrap/bootstrap-select.min.js" asp-append-version="true"></script>
+        <script src="~/js/bootstrap/datepicker/bootstrap-datepicker.js" asp-append-version="true"></script>
+
+        <!-- MDB core JavaScript -->
+        <script src="~/js/mdb/mdb.min.js" asp-append-version="true"></script>
+        <script src="~/js/mdb/components/pro/chips.js" asp-append-version="true"></script>
+        <script src="~/js/mdb/components/mdb-autocomplete.js" asp-append-version="true"></script>
+        <script src="~/js/mdb/components/mdb-steppers.min.js" asp-append-version="true"></script>
+        <script src="~/js/mdb/vendors/steppers.js" asp-append-version="true"></script>
+        <script src="~/js/bootstrap/stepper/bs-stepper.min.js" asp-append-version="true"></script>
+        @*<script src="~/js/mdb/components/smooth-scroll.js" asp-append-version="true"></script>
+            <script src="~/js/mdb/vendors/scrollbar.js" asp-append-version="true"></script>*@
+        <script src="~/js/mdb/vendors/datepicker/picker.js" asp-append-version="true"></script>
+        <script src="~/js/mdb/vendors/datepicker/picker-date.js" asp-append-version="true"></script>
+        <script src="~/js/mdb/vendors/datepicker/picker-time.js" asp-append-version="true"></script>
+        @*<script src="~/js/mdb/vendors/datepicker/picker-date-time.js" asp-append-version="true"></script>
+
+        @*Commons JS*@
+        <script src="~/js/commons/Common.js" asp-append-version="true"></script>
+        <script src="~/js/commons/Modal.js" asp-append-version="true"></script>
+        <script src="~/js/commons/Swal2.js"></script>
+        <script src="~/js/commons/Fetch.js" asp-append-version="true"></script>
+        @*<script src="~/js/commons/components/FSMaterialComponents.js" asp-append-version="true"></script>*@
+        <script src="~/js/commons/components/FSBootstrapSelect.js" asp-append-version="true"></script>
+        <script src="~/js/commons/components/FSMaterialInput.js" asp-append-version="true"></script>
+        <script src="~/js/commons/components/FSBootstrapTab.js" asp-append-version="true"></script>
+        <script src="~/js/commons/components/FSBootstrapToggle.js" asp-append-version="true"></script>
+        <script src="~/js/commons/components/FSBootstrapToolTip.js" asp-append-version="true"></script>
+        <script src="~/js/commons/components/FSBootstrapSummerNote.js" asp-append-version="true"></script>
+        <script src="~/js/commons/components/FSBootstrapSummerNote.js" asp-append-version="true"></script>
+        <script src="~/js/commons/components/FSTreeView.js" asp-append-version="true"></script>
+        <script src="~/js/commons/vanilla-masker.js" asp-append-version="true"></script>
+        <script src="~/js/commons/components/FSMaskInput.js" asp-append-version="true"></script>
+        <script src="~/js/commons/components/FSBootstrapAutoComplete.js" asp-append-version="true"></script>
+        <script src="~/js/commons/components/FSDragAndDrop.js" asp-append-version="true"></script>
+        <script src="~/js/commons/components/FSPickADate.js" asp-append-version="true"></script>
+        <script src="~/js/commons/components/FSButton.js" asp-append-version="true"></script>
+
+        <!-- Loader-->
+        <script src="~/js/loader/HoldOn.js" asp-append-version="true"></script>
+        <script src="~/js/loader/LoadingOverlay.js" asp-append-version="true"></script>
+
+
+        <script src="~/js/dropzone/dropzone.js"></script>
+    
+        <script src="~/js/select2/select2.min.js"></script>
+            <script type="text/javascript">
+            const userId = '@_contextAccessor.GetCurrentUserName()'
+            const appUrl = '@_contextAccessor.GetAppUrl()';
+            const appPathBase = '@_contextAccessor.GetPathBase()';
+            const appBaseUrl = '@(_contextAccessor.GetBaseUrl())';
+
+        </script>
+        <script type="text/javascript">
+            const onClickSidebar = (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+
+
+            const bodyEl = getElementInstance('app');
+            const isOpen = bodyEl.classList.contains('sidenav-toggled');
+            // // Custom behavior when sidebar is closed
+            if (isOpen) {
+                bodyEl.classList.remove('sidenav-toggled');
+                $('#menu_logo_open').css({
+                    'display': 'flex'
+                });
+                $('#menu_logo_closed').css({
+                    'display': 'none'
+                });
+                $('.app-sidebar__user>div').css({
+                    'align-items': 'normal',
+                })
+                // your custom behavior here
+            } else {
+                bodyEl.classList.add('sidenav-toggled');
+                $('#menu_logo_open').css({
+                    'display': 'none'
+                });
+                $('#menu_logo_closed').css({
+                    'display': 'flex'
+                });
+                $('.app-sidebar__user>div').css({
+                    'align-items': 'center'
+                })
+                
+                // optional behavior when open
+            }
+        }
+        
+
+            const showLoader = (theme = 'custom', spinnerColor = 'F29D35', message = 'Cargando datos. Por favor, espere.', backgroundColor = '#344055', textColor = 'white') => {
+                //THEMES
+                /**
+                 *  sk-rect
+                 *  sk-bounce
+                 *  sk-folding-cube
+                 *  sk-circle
+                 *  sk-dot
+                 *  sk-bounce
+                 *  sk-falding-circle
+                 *  sk-cube-grid
+                 *  custom
+                 *  **/
+                const loaderElement = document.getElementById('holdon-overlay');
+                if (!loaderElement) {
+                    HoldOn.open({
+                        theme: theme,
+                        // custom content here
+                        content: `<div class="spinner-border text-dark" style="color:#${spinnerColor}!important" role="status">
+                                                                        <span class="visually-hidden">Loading...</span>
+                                                                    </div>`,
+                        // loading message here
+                        message: message,
+                        // background color
+                        backgroundColor: backgroundColor,
+                        // text color
+                        textColor: textColor,
+                    });
+                }
+            }
+
+            const hideLoader = () => HoldOn.close();
+
+            Dropzone.autoDiscover = false;
+            
+    initializeScrollToTopFloatingButtons();
+            const validateBreadCrumbPaginatorOption = (breadcrumbId) => {
+                let hasNextTab = FSBootstrapTab.hasNextTab('nav-breadcrumb');
+                let hasPrevTab = FSBootstrapTab.hasPreviousTab('nav-breadcrumb');
+                if (!hasNextTab) {
+                    $('#paginate-next').addClass('disabled')
+                    $('button', '#paginate-next').removeClass('black-text').addClass('grey-text');
+                }
+                else {
+                    $('#paginate-next').removeClass('disabled');
+                    $('button', '#paginate-next').addClass('black-text').removeClass('grey-text');
+                }
+
+                if (!hasPrevTab) {
+                    $('#paginate-previous').addClass('disabled')
+                    $('button', '#paginate-previous').removeClass('black-text').addClass('grey-text');
+                }
+                else {
+                    $('#paginate-previous').removeClass('disabled');
+                    $('button', '#paginate-previous').addClass('black-text').removeClass('grey-text');
+                }
+            }
+            validateBreadCrumbPaginatorOption()
+            FSBootstrapTab.onHidden('nav-breadcrumb', validateBreadCrumbPaginatorOption)
+            const nextPane = (event) => {
+                FSBootstrapTab.showNextTab('nav-breadcrumb', false);
+                validateBreadCrumbPaginatorOption()
+            }
+            const previousPane = (event) => {
+                FSBootstrapTab.showPreviousTab('nav-breadcrumb');
+                validatePaginatorOption()
+            }
+
+        
+
+        </script>
+
+            <script>
+            $(document).ready(function () {
+                $("input:text,form").attr("autocomplete", "off");
+                $('a[href="' + this.location.pathname + '"]').parent().addClass('active');
+                $('.dropdown-toggle').dropdown();
+                $('.dropdown-toggle').click(function () {
+                    $('.nav navbar-nav').collapse('hide');
+                });
+
+                //$('input, :input').attr('autocomplete', 'off');
+
+                //$(".select2").select2({
+                //    //placeholder: "Select a state",
+                //    allowClear: true,
+                //    width: '100%'
+                //    //width: 'resolve' 
+                //});
+                $('#summernote').summernote({
+                    height: 400
+                });
+
+                
+            $("input:text,form").attr("autocomplete", "off");
+            $('.select2').each(function () {
+                initializeSelect2(this);
+            });
+
+            //   $(".select2").select2({
+            //    theme: "bootstrap",
+            //    allowClear: true,
+            //    width: '100%',
+            //    dropdownCssClass: 'custom-dropdown'
+            //});
+
+            });
+    const initializeSelect2 = (element,width='100%') => {
+        let hasModalParent = $(element).parents('.modal').length > 0 ? true : false;
+                if (hasModalParent)
+                    $(element).select2({
+                        theme: "bootstrap",
+                        allowClear: true,
+                        width:width,
+                        dropdownParent: $(element).parents('.modal')
+                    });
+                else 
+                    $(element).select2({
+                        theme: "bootstrap",
+                        allowClear: true,
+                        width: '100%',
+                        //dropdownParent: $(this).parents('.modal')
+                    });
+    }
+            function RFecha() {
+                var retval;
+                var d = new Date();
+                var month = d.getMonth() + 1;
+                var day = d.getDate();
+                return retval = (('' + day).length < 2 ? '0' : '') + day + '/' +
+                    (('' + month).length < 2 ? '0' : '') + month + '/' +
+                    d.getFullYear();
+            }
+
+            const TMensage = Swal.mixin({
+                toast: true,
+                /*  position: 'top-end'*/
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+            function NotifyN(titulo, mensaje, tipo, icono) {
+                $.notify({
+                    title: titulo,
+                    message: mensaje,
+                    icon: icono
+                }, {
+                    type: tipo,
+                    z_index: 2000,
+                    placement: {
+                        from: "top",
+                        align: "right"
+                    },
+                });
+            }
+            const formatDecimal = (num, decimals) => num.toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            });
+            //function formatCurrency(num) {
+            //    num = num.toString().replace(/\$|\,/g, '');
+            //    if (isNaN(num)) num = "0";
+            //    sign = (num == (num = Math.abs(num)));
+            //    num = Math.floor(num * 100 + 0.50000000001);
+            //    cents = num % 100;
+            //    num = Math.floor(num / 100).toString();
+            //    if (cents < 10) cents = "0" + cents;
+            //    for (var i = 0; i < Math.floor((num.length - (1 + i)) / 3); i++)
+            //        num = num.substring(0, num.length - (4 * i + 3)) + ',' + num.substring(num.length - (4 * i + 3));
+            //    return (((sign) ? '' : '-') + '' + num + '.' + cents);
+            //}
+
+            function MensageS2(icon, titulo, posicion) {
+                TMensage.fire({
+                    icon: icon,
+                    title: titulo,
+                    position: posicion
+                });
+            }
+
+
+            $("#myBtn").click(function (e) {
+
+                $("#myModal").modal();
+                $("#myModal").css("z-index", "1500");
+                $('#myModal').appendTo("body")
+
+                $(".modal-header").on("mousedown", function (mousedownEvt) {
+                    var $draggable = $(this);
+                    var x = mousedownEvt.pageX - $draggable.offset().left,
+                        y = mousedownEvt.pageY - $draggable.offset().top;
+                    $("body").on("mousemove.draggable", function (mousemoveEvt) {
+                        $draggable.closest(".modal-dialog").offset({
+                            "left": mousemoveEvt.pageX - x,
+                            "top": mousemoveEvt.pageY - y
+                        });
+                    });
+                    $("body").one("mouseup", function () {
+                        $("body").off("mousemove.draggable");
+                    });
+                    $draggable.closest(".modal").one("bs.modal.hide", function () {
+                        $("body").off("mousemove.draggable");
+                    });
+                });
+            });
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
+        <script src="~/js/bootstrap/bootstrap-notify.min.js"></script>
+
+        @await RenderSectionAsync("Scripts", required: false)
+
+    </body>
+</html>
